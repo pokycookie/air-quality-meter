@@ -1,4 +1,5 @@
 import axios from "axios";
+import DashboardTile from "./components/dashboardTile";
 import { IData } from "./types";
 
 export default function App() {
@@ -16,6 +17,9 @@ export default function App() {
   return (
     <div className="App">
       <button onClick={axiosHandler}>AXIOS</button>
+      <div className="dashboard">
+        <DashboardTile />
+      </div>
     </div>
   );
 }

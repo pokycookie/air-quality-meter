@@ -1,0 +1,10 @@
+@import "../const.scss";
+
+.dashboardTile {
+  width: 200px;
+  height: 200px;
+  background-color: $color-green;
+  box-sizing: border-box;
+  border-radius: 20px;
+  cursor: pointer;
+}
