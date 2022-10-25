@@ -19,10 +19,17 @@ try {
   console.log(`mongoDB error: ${error}`);
 }
 
+// Express
 app.use(helmet());
 app.use(express.json());
-app.use(cors());
 app.use(express.urlencoded({ extended: false }));
+
+// Development vs Production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+} else {
+  app.use(cors());
+}
 
 app.get("/", (req, res) => {
   res.json("homepage");
