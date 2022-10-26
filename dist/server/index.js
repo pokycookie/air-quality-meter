@@ -9,6 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dataModel_1 = __importDefault(require("./models/dataModel"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // MongoDB
@@ -21,12 +22,24 @@ try {
 catch (error) {
     console.log(`mongoDB error: ${error}`);
 }
+// Express
 app.use((0, helmet_1.default)());
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
 app.use(express_1.default.urlencoded({ extended: false }));
+// Development vs Production
+if (process.env.NODE_ENV === "production") {
+    app.use(express_1.default.static("build"));
+}
+else {
+    app.use((0, cors_1.default)());
+}
 app.get("/", (req, res) => {
-    res.json("homepage");
+    if (process.env.NODE_ENV === "production") {
+        res.sendFile(path_1.default.resolve(__dirname, "../../", "build", "index.html"));
+    }
+    else {
+        res.json("homepage");
+    }
 });
 // API Route
 app.post("/api/upload", (req, res) => {

@@ -5,6 +5,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import DataModel from "./models/dataModel";
 import { IData } from "../src/types";
+import path from "path";
 
 dotenv.config();
 const app = express();
@@ -32,7 +33,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get("/", (req, res) => {
-  res.json("homepage");
+  if (process.env.NODE_ENV === "production") {
+    res.sendFile(path.resolve(__dirname, "../../", "build", "index.html"));
+  } else {
+    res.json("homepage");
+  }
 });
 
 // API Route
