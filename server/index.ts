@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(cors());
 }
 
+// Homepage
 app.get("/", (req, res) => {
   if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "../../", "build", "index.html"));
@@ -41,23 +42,34 @@ app.get("/", (req, res) => {
 });
 
 // API Route
-app.post("/api/upload", (req, res) => {
-  // upload data
+// Upload data
+app.post("/api/data", (req, res) => {
   if (req.body) {
     const body: IData = req.body;
     const newData = new DataModel(body);
     newData
       .save()
       .then(() => {
-        console.log("uploaded");
+        console.log(`${new Date()}: Data uploaded`);
+        res.status(200);
       })
       .catch((err) => {
         console.error(err);
-        res.status(400).json(err);
+        res.status(400);
       });
   } else {
     res.status(400);
   }
+});
+
+// Get data
+app.get("/api/data", (req, res) => {
+  DataModel.find()
+    .then((result) => res.status(200).json(result))
+    .catch((err) => {
+      console.error(err);
+      res.status(400);
+    });
 });
 
 const PORT = process.env.PORT || 4000;
