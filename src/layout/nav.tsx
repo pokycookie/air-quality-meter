@@ -16,9 +16,9 @@ export default function Nav() {
   return (
     <div className="navArea" onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
       <div className={`nav${isEnter ? " hover" : ""}`}>
-        <NavBtn icon={faChartColumn} />
-        <NavBtn icon={faHouse} selected />
-        <NavBtn icon={faDatabase} />
+        <NavBtn index={0} icon={faChartColumn} />
+        <NavBtn index={1} icon={faHouse} />
+        <NavBtn index={2} icon={faDatabase} />
       </div>
     </div>
   );
