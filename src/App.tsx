@@ -1,6 +1,8 @@
 import axios from "axios";
 import { IData } from "./types";
 import "./scss/app.scss";
+import TileArea from "./layout/tileArea";
+import Nav from "./layout/nav";
 
 export default function App() {
   const axiosHandler = () => {
@@ -20,11 +22,12 @@ export default function App() {
 
   return (
     <div className="App">
-      <header></header>
+      <nav>
+        <Nav />
+      </nav>
       <main>
-        <button onClick={axiosHandler}>AXIOS</button>
+        <TileArea />
       </main>
-      <footer></footer>
     </div>
   );
 }

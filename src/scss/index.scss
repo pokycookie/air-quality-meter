@@ -1,1 +1,15 @@
 @import "./reset.scss";
+@import "./const.scss";
+
+body {
+  background-color: white;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
