@@ -13,3 +13,15 @@ body {
   align-items: center;
   box-sizing: border-box;
 }
+
+.__btn {
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: $color-black;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}

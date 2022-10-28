@@ -6,3 +6,8 @@ export interface IData {
   temp: number;
   humi: number;
 }
+
+export interface ICoord {
+  x: number;
+  y: number;
+}

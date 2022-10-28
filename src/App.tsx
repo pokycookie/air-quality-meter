@@ -1,33 +1,41 @@
-import axios from "axios";
-import { IData } from "./types";
 import "./scss/app.scss";
-import TileArea from "./layout/tileArea";
 import Nav from "./layout/nav";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { IReduxStore, RSetWindowSize } from "./redux";
+import pageSwitcher from "./pages/pageSwitcher";
+import { useEffect } from "react";
 
 export default function App() {
-  const axiosHandler = () => {
-    axios
-      .get<IData[]>("http://localhost:4000/api/data")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));
-    // axios.post<IData>("http://localhost:4000/api/data", {
-    //   pm10: 120,
-    //   pm25: 150,
-    //   pm100: 130,
-    //   form: 0.12,
-    //   temp: 33.25,
-    //   humi: 12.34,
-    // });
+  const dispatch = useDispatch();
+  const page = useSelector<IReduxStore, number>((state) => {
+    return state.page;
+  }, shallowEqual);
+
+  const resizeHandler = () => {
+    const x = window.innerWidth;
+    const y = window.innerHeight;
+    dispatch(RSetWindowSize({ x, y }));
   };
+
+  useEffect(() => {
+    const x = window.innerWidth;
+    const y = window.innerHeight;
+    dispatch(RSetWindowSize({ x, y }));
+
+    // EventListener
+    window.addEventListener("resize", resizeHandler);
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">
       <nav>
         <Nav />
       </nav>
-      <main>
-        <TileArea />
-      </main>
+      <main>{pageSwitcher(page)}</main>
     </div>
   );
 }
