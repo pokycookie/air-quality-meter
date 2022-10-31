@@ -47,17 +47,18 @@ app.post("/api/data", (req, res) => {
   if (req.body) {
     const body: IData = req.body;
     console.log(body);
-    const newData = new DataModel(body);
-    newData
-      .save()
-      .then(() => {
-        console.log(`${new Date()}: Data uploaded`);
-        res.status(200);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(400);
-      });
+    res.status(200);
+    // const newData = new DataModel(body);
+    // newData
+    //   .save()
+    //   .then(() => {
+    //     console.log(`${new Date()}: Data uploaded`);
+    //     res.status(200);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     res.status(400);
+    //   });
   } else {
     res.status(400);
   }
