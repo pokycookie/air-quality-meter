@@ -46,6 +46,7 @@ app.get("/", (req, res) => {
 app.post("/api/data", (req, res) => {
   if (req.body) {
     const body: IData = req.body;
+    console.log(body);
     const newData = new DataModel(body);
     newData
       .save()
