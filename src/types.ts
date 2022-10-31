@@ -1,4 +1,9 @@
-export interface IData {
+export interface IDB {
+  _id: string;
+  updated: Date;
+}
+
+export interface IData extends IDB {
   pm10: number;
   pm25: number;
   pm100: number;

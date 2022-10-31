@@ -5,26 +5,57 @@
 
   .nav {
     width: 100%;
-    height: 50px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    height: 60px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 5px;
     background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    padding: 0px 10px;
+    padding: 0px 20px;
 
     .refreshBtn {
       width: 30px;
     }
   }
 
+  .field {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 5px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 1fr;
+
+    p {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-sizing: border-box;
+      padding-left: 20px;
+    }
+  }
+
   .main {
     width: 100%;
     background-color: white;
-    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     overflow-x: hidden;
     overflow-y: auto;
+    box-sizing: border-box;
+    padding: 10px 0px;
+
+    .list {
+      height: 30px;
+      display: grid;
+      grid-template-columns: 100px 100px 100px 100px 100px 100px 1fr;
+      padding-left: 20px;
+      font-size: 14px;
+    }
   }
 }
