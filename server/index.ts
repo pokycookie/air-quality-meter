@@ -45,32 +45,36 @@ app.get("/", (req, res) => {
 // Upload data
 app.post("/api/data", (req, res) => {
   if (req.body) {
-    const body: string = req.body.uno;
+    const body: string = String(req.body.uno);
     console.log(req.body);
-    console.log(req.body.uno);
-    res.status(200).json("OK");
-    // const bodyArr = body.split(" ");
-    // if (bodyArr[0] !== "UNO" || bodyArr.length < 7) res.status(400).json("Bad Request");
+    console.log(typeof req.body.uno);
+    try {
+      const bodyArr = body.split(" ");
+      if (bodyArr[0] !== "UNO" || bodyArr.length < 7) res.status(400).json("Bad Request");
 
-    // const newData = new DataModel({
-    //   pm10: parseFloat(bodyArr[1]),
-    //   pm25: parseFloat(bodyArr[2]),
-    //   pm100: parseFloat(bodyArr[3]),
-    //   form: parseFloat(bodyArr[4]),
-    //   temp: parseFloat(bodyArr[5]),
-    //   humi: parseFloat(bodyArr[6]),
-    //   updated: new Date(),
-    // });
-    // newData
-    //   .save()
-    //   .then(() => {
-    //     console.log(`${new Date()}: Data uploaded`);
-    //     res.status(200).json("OK");
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     res.status(400).json("Bad Request");
-    //   });
+      const newData = new DataModel({
+        pm10: parseFloat(bodyArr[1]),
+        pm25: parseFloat(bodyArr[2]),
+        pm100: parseFloat(bodyArr[3]),
+        form: parseFloat(bodyArr[4]),
+        temp: parseFloat(bodyArr[5]),
+        humi: parseFloat(bodyArr[6]),
+        updated: new Date(),
+      });
+      newData
+        .save()
+        .then(() => {
+          console.log(`${new Date()}: Data uploaded`);
+          res.status(200).json("OK");
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(400).json("Bad Request");
+        });
+    } catch (err) {
+      console.error(err);
+      res.status(400).json("Bad Request");
+    }
   } else {
     res.status(400).json("Bad Request");
   }
