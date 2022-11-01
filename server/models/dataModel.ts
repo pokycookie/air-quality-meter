@@ -31,6 +31,10 @@ const dataSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  updated: {
+    type: Date,
+    required: true,
+  },
 });
 
 export default mongoose.model("DataModel", dataSchema);
