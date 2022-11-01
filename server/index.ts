@@ -48,6 +48,7 @@ app.post("/api/data", (req, res) => {
     const body: string = req.body.uno;
     console.log(req.body);
     console.log(req.body.uno);
+    res.status(200).json("OK");
     // const bodyArr = body.split(" ");
     // if (bodyArr[0] !== "UNO" || bodyArr.length < 7) res.status(400).json("Bad Request");
 
