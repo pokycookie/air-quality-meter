@@ -45,15 +45,17 @@ app.get("/", (req, res) => {
 // Upload data
 app.post("/api/data", (req, res) => {
   if (req.body) {
-    const body = req.body;
+    const body: IData = req.body;
     try {
+      console.log(body);
+      console.log(typeof body.pm10);
       const newData = new DataModel({
-        pm10: parseFloat(body.pm10),
-        pm25: parseFloat(body.pm25),
-        pm100: parseFloat(body.pm100),
-        form: parseFloat(body.form),
-        temp: parseFloat(body.temp),
-        humi: parseFloat(body.humi),
+        pm10: body.pm10,
+        pm25: body.pm25,
+        pm100: body.pm100,
+        form: body.form,
+        temp: body.temp,
+        humi: body.humi,
         updated: new Date(),
       });
       newData
