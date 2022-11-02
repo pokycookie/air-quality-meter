@@ -45,26 +45,21 @@ app.get("/", (req, res) => {
 // Upload data
 app.post("/api/data", (req, res) => {
   if (req.body) {
-    const body: string = String(req.body.uno);
-    console.log(req.body);
-    console.log(typeof req.body.uno);
+    const body = req.body;
     try {
-      const bodyArr = body.split(" ");
-      if (bodyArr[0] !== "UNO" || bodyArr.length < 7) res.status(400).json("Bad Request");
-
       const newData = new DataModel({
-        pm10: parseFloat(bodyArr[1]),
-        pm25: parseFloat(bodyArr[2]),
-        pm100: parseFloat(bodyArr[3]),
-        form: parseFloat(bodyArr[4]),
-        temp: parseFloat(bodyArr[5]),
-        humi: parseFloat(bodyArr[6]),
+        pm10: parseFloat(body.pm10),
+        pm25: parseFloat(body.pm25),
+        pm100: parseFloat(body.pm100),
+        form: parseFloat(body.form),
+        temp: parseFloat(body.temp),
+        humi: parseFloat(body.humi),
         updated: new Date(),
       });
       newData
         .save()
         .then(() => {
-          console.log(`${new Date()}: Data uploaded`);
+          console.log(`${new Date()}: ${newData}`);
           res.status(200).json("OK");
         })
         .catch((err) => {
