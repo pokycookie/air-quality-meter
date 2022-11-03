@@ -47,22 +47,36 @@ app.get("/", (req, res) => {
 app.post("/api/data", (req, res) => {
     if (req.body) {
         const body = req.body;
-        console.log(body);
-        res.status(200);
-        // const newData = new DataModel(body);
-        // newData
-        //   .save()
-        //   .then(() => {
-        //     console.log(`${new Date()}: Data uploaded`);
-        //     res.status(200);
-        //   })
-        //   .catch((err) => {
-        //     console.error(err);
-        //     res.status(400);
-        //   });
+        try {
+            console.log(body);
+            console.log(typeof body.pm10);
+            const newData = new dataModel_1.default({
+                pm10: body.pm10.toFixed(2),
+                pm25: body.pm25.toFixed(2),
+                pm100: body.pm100.toFixed(2),
+                form: body.form.toFixed(2),
+                temp: body.temp.toFixed(2),
+                humi: body.humi.toFixed(2),
+                updated: new Date(),
+            });
+            newData
+                .save()
+                .then(() => {
+                console.log(`${new Date()}: ${newData}`);
+                res.status(200).json("OK");
+            })
+                .catch((err) => {
+                console.error(err);
+                res.status(400).json("Bad Request");
+            });
+        }
+        catch (err) {
+            console.error(err);
+            res.status(400).json("Bad Request");
+        }
     }
     else {
-        res.status(400);
+        res.status(400).json("Bad Request");
     }
 });
 // Get data
@@ -71,7 +85,7 @@ app.get("/api/data", (req, res) => {
         .then((result) => res.status(200).json(result))
         .catch((err) => {
         console.error(err);
-        res.status(400);
+        res.status(400).json(err);
     });
 });
 const PORT = process.env.PORT || 4000;

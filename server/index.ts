@@ -50,12 +50,12 @@ app.post("/api/data", (req, res) => {
       console.log(body);
       console.log(typeof body.pm10);
       const newData = new DataModel({
-        pm10: body.pm10,
-        pm25: body.pm25,
-        pm100: body.pm100,
-        form: body.form,
-        temp: body.temp,
-        humi: body.humi,
+        pm10: body.pm10.toFixed(2),
+        pm25: body.pm25.toFixed(2),
+        pm100: body.pm100.toFixed(2),
+        form: body.form.toFixed(2),
+        temp: body.temp.toFixed(2),
+        humi: body.humi.toFixed(2),
         updated: new Date(),
       });
       newData
@@ -83,7 +83,7 @@ app.get("/api/data", (req, res) => {
     .then((result) => res.status(200).json(result))
     .catch((err) => {
       console.error(err);
-      res.status(400);
+      res.status(400).json(err);
     });
 });
 
