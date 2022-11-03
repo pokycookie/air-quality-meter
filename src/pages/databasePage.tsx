@@ -14,7 +14,7 @@ export default function DatabasePage() {
     return state.windowSize;
   }, shallowEqual);
 
-  useEffect(() => {
+  const refresh = () => {
     getData()
       .then((res) => {
         console.log(res.data);
@@ -23,13 +23,17 @@ export default function DatabasePage() {
       .catch((err) => {
         console.error(err);
       });
+  };
+
+  useEffect(() => {
+    refresh();
   }, []);
 
   return (
     <div className="databasePage">
       <div className="nav">
         <div className="left">
-          <button className="__btn refreshBtn">
+          <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
         </div>
@@ -45,15 +49,15 @@ export default function DatabasePage() {
         <p>Updated</p>
       </div>
       <div className="main" style={{ height: getHeight(windowSize) }}>
-        {DB.map((element) => {
+        {DB.map((element, index) => {
           return (
-            <div className="list">
-              <p>{element.temp}</p>
-              <p>{element.humi}</p>
-              <p>{element.pm10}</p>
-              <p>{element.pm25}</p>
-              <p>{element.pm100}</p>
-              <p>{element.form}</p>
+            <div className="list" key={index}>
+              <p>{element.temp.toFixed(2)}℃</p>
+              <p>{element.humi.toFixed(2)}%</p>
+              <p>{element.pm10.toFixed(2)}μg/m³</p>
+              <p>{element.pm25.toFixed(2)}μg/m³</p>
+              <p>{element.pm100.toFixed(2)}μg/m³</p>
+              <p>{element.form.toFixed(2)}μg/m³</p>
               <p>{moment(element.updated).format("YYYY-MM-DD hh:mm:ss")}</p>
             </div>
           );

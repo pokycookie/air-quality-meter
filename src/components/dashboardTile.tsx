@@ -12,12 +12,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { IReduxStore, RSetHomeType } from "../redux";
 import "../scss/components/dashboardTile.scss";
+import Guage from "./guage";
 
 type TTile = "temp" | "humi" | "pm" | "form";
 
 interface IProps {
   type: TTile;
   index: number;
+  min: number;
+  max: number;
+  value: number;
 }
 
 export default function DashboardTile(props: IProps) {
@@ -34,12 +38,18 @@ export default function DashboardTile(props: IProps) {
 
   return (
     <div className={`dashboardTile${isSelected ? " selected" : ""}`} onClick={clickHandler}>
-      <p className="title">{getTitle(props.type)}</p>
-      <div className="iconArea">{getIcon(props.type)}</div>
+      <p className="title">
+        {getTitle(props.type)}
+        {getIcon(props.type)}
+      </p>
+      <div className="guage">
+        <Guage min={props.min} max={props.max} value={props.value} />
+      </div>
     </div>
   );
 }
 
+// Functions
 function getTitle(type: TTile, value?: number) {
   switch (type) {
     case "temp":
@@ -56,13 +66,13 @@ function getTitle(type: TTile, value?: number) {
 function getIcon(type: TTile) {
   switch (type) {
     case "temp":
-      return <FontAwesomeIcon icon={faTemperature0} className="temp" />;
+      return <FontAwesomeIcon icon={faTemperature2} className="icon temp" />;
     case "humi":
-      return <FontAwesomeIcon icon={faDroplet} className="humi" />;
+      return <FontAwesomeIcon icon={faDroplet} className="icon humi" />;
     case "pm":
-      return <FontAwesomeIcon icon={faCloudMeatball} className="pm" />;
+      return <FontAwesomeIcon icon={faCloudMeatball} className="icon pm" />;
     case "form":
-      return <FontAwesomeIcon icon={faSkullCrossbones} className="form" />;
+      return <FontAwesomeIcon icon={faSkullCrossbones} className="icon form" />;
   }
 }
 
