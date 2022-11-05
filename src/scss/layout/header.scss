@@ -1,0 +1,29 @@
+@import "../const.scss";
+
+header {
+  position: sticky;
+  width: 100%;
+  height: 70px;
+  background-color: $color-navy;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .logoArea {
+    height: 100%;
+    background-color: white;
+
+    .logo {
+      height: 100%;
+      img {
+        display: block;
+      }
+    }
+    .textKr {
+      height: 70%;
+    }
+    .textEn {
+      height: 30%;
+    }
+  }
+}
