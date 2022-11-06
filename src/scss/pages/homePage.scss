@@ -1,12 +1,48 @@
+@import "../const.scss";
+
 .homePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .refreshBtn {
+    width: 30px;
+  }
+
   .tileArea {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 860px;
+    border: 2px solid $color-grey;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
     margin-bottom: 20px;
+
+    .titleArea {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .time {
+        margin-left: 10px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+    .contentArea {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   .graphArea {
-    width: 100%;
+    width: 860px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 2px solid $color-grey;
+    border-radius: 10px;
   }
 }

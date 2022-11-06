@@ -8,7 +8,7 @@ export interface IReduxStore {
 }
 
 const initState: IReduxStore = {
-  page: 1,
+  page: 0,
   homeType: 0,
   windowSize: { x: 0, y: 0 },
 };

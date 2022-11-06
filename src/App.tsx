@@ -1,9 +1,9 @@
 import "./scss/app.scss";
-import Nav from "./layout/nav";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { IReduxStore, RSetWindowSize } from "./redux";
 import pageSwitcher from "./pages/pageSwitcher";
 import { useEffect } from "react";
+import Header from "./layout/header";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -32,9 +32,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <nav>
-        <Nav />
-      </nav>
+      <Header />
       <main>{pageSwitcher(page)}</main>
     </div>
   );

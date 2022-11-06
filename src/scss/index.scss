@@ -5,23 +5,26 @@ body {
   background-color: white;
 }
 
-#root {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-}
-
 .__btn {
   height: 30px;
-  border-radius: 10px;
+  border-radius: 7px;
   border: none;
-  background-color: $color-black;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: $color-navy;
   color: white;
+  transition: all 0.3s ease-in-out;
+
+  .icon {
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover {
+    background-color: $color-sky;
+    .icon {
+      transform: rotate(40deg);
+    }
+  }
 }

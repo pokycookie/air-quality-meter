@@ -1,3 +1,6 @@
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import DashboardTile from "../components/dashboardTile";
@@ -9,6 +12,7 @@ import { IData } from "../types";
 
 export default function HomePage() {
   const [DB, setDB] = useState<IData[]>([]);
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const homeType = useSelector<IReduxStore, number>((state) => {
     return state.homeType;
   }, shallowEqual);
@@ -16,8 +20,8 @@ export default function HomePage() {
   const refresh = () => {
     getData()
       .then((res) => {
-        console.log(res.data);
         setDB(res.data);
+        setCurrentTime(new Date());
       })
       .catch((err) => {
         console.error(err);
@@ -31,13 +35,26 @@ export default function HomePage() {
   return (
     <div className="homePage">
       <div className="tileArea">
-        <DashboardTile index={0} min={-20} max={60} value={DB[0] ? DB[0].temp : 0} type="temp" />
-        <DashboardTile index={1} min={0} max={100} value={DB[0] ? DB[0].humi : 0} type="humi" />
-        <DashboardTile index={2} min={0} max={100} value={DB[0] ? DB[0].pm25 : 0} type="pm" />
-        <DashboardTile index={3} min={0} max={100} value={DB[0] ? DB[0].form : 0} type="form" />
+        <div className="titleArea">
+          <button className="__btn refreshBtn" onClick={refresh}>
+            <FontAwesomeIcon className="icon" icon={faRotateRight} />
+          </button>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD hh:mm:ss")}</p>
+        </div>
+        <div className="contentArea">
+          <DashboardTile index={0} min={-20} max={60} value={DB[0] ? DB[0].temp : 0} type="temp" />
+          <DashboardTile index={1} min={0} max={100} value={DB[0] ? DB[0].humi : 0} type="humi" />
+          <DashboardTile index={2} min={0} max={100} value={DB[0] ? DB[0].pm25 : 0} type="pm" />
+          <DashboardTile index={3} min={0} max={100} value={DB[0] ? DB[0].form : 0} type="form" />
+        </div>
       </div>
       <div className="graphArea">
-        <Graph data={getGraphData(homeType, DB)} />
+        <div className="titleArea">
+          <p></p>
+        </div>
+        <div className="graph">
+          <Graph data={getGraphData(homeType, DB)} type={homeType} />
+        </div>
       </div>
     </div>
   );
