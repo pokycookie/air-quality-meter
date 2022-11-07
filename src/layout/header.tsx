@@ -25,9 +25,9 @@ export default function Header() {
         <p className={page === 0 ? "selected" : ""} onClick={() => clickHandler(0)}>
           대시보드
         </p>
-        <p className={page === 1 ? "selected" : ""} onClick={() => clickHandler(1)}>
+        {/* <p className={page === 1 ? "selected" : ""} onClick={() => clickHandler(1)}>
           그래프
-        </p>
+        </p> */}
         <p className={page === 2 ? "selected" : ""} onClick={() => clickHandler(2)}>
           DB
         </p>

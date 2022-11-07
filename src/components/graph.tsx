@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { range } from "../lib";
 
@@ -15,8 +16,13 @@ const LINE_Y = SVG_HEIGHT - MARGIN_TOP + 1;
 const ROW_COUNT = 5;
 const COLUMN_COUNT = 12;
 
+export interface IGraphData {
+  value: number;
+  updated: Date;
+}
+
 interface IProps {
-  data: number[];
+  data: IGraphData[];
   type?: number;
 }
 
@@ -24,6 +30,9 @@ export default function Graph(props: IProps) {
   const [max, setMax] = useState(0);
   const [min, setMin] = useState(0);
   const [selected, setSelected] = useState<number>();
+  const [selectedIndex, setSelectedIndex] = useState<number>();
+
+  const selectedHeight = getHeight(props.data[selectedIndex || 0]?.value || 0, max, min);
 
   const mouseHandler = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     const width = e.currentTarget.clientWidth;
@@ -36,13 +45,20 @@ export default function Graph(props: IProps) {
         : svgValue > MARGIN_LEFT + GRAPH_WIDTH
         ? MARGIN_LEFT + GRAPH_WIDTH
         : svgValue;
-    console.log(svgValue);
-    setSelected(Math.ceil(svgValue / COLUMN_COUNT) * COLUMN_COUNT);
+    const blockSize = GRAPH_WIDTH / (COLUMN_COUNT * 2);
+    const tempIndex = Math.floor((svgValue + blockSize / 2) / blockSize);
+    const tempSelected = tempIndex * blockSize;
+    if (selected !== tempSelected) {
+      setSelected(tempSelected);
+    }
+    if (selectedIndex !== tempIndex - 2) {
+      setSelectedIndex(tempIndex - 2);
+    }
   };
 
   useEffect(() => {
     if (props.type === undefined) {
-      setMax(Math.max(...props.data));
+      setMax(Math.max(...props.data.map((e) => e.value)));
     } else {
       switch (props.type) {
         case 0:
@@ -64,12 +80,6 @@ export default function Graph(props: IProps) {
       onMouseLeave={() => setSelected(undefined)}
     >
       <g stroke="#0f296f" strokeWidth="0.7" strokeLinecap="square">
-        {selected ? (
-          <path
-            d={`M ${selected} ${GRAPH_HEIGHT + MARGIN_TOP} ${selected} ${MARGIN_TOP}`}
-            strokeWidth="0.5"
-          />
-        ) : null}
         <g>
           <path d={`M ${LINE_X} ${LINE_Y} L ${LINE_X} ${MARGIN_TOP}`} />
           {range(ROW_COUNT).map((e) => {
@@ -109,15 +119,67 @@ export default function Graph(props: IProps) {
           fill="none"
         />
       </g>
+      {selected && selectedIndex ? (
+        <g stroke="#0f296f" strokeWidth="0.5" strokeLinecap="square">
+          <path d={`M ${selected} ${GRAPH_HEIGHT + MARGIN_TOP} ${selected} ${MARGIN_TOP}`} />
+          <circle
+            cx={selected}
+            cy={selectedHeight}
+            r="1.7"
+            stroke="white"
+            strokeWidth="0.7"
+            fill="#607eaa"
+          />
+          {SVG_WIDTH - selected > 40 ? (
+            <g fontSize="4" stroke="white" strokeWidth={0.01} fill="white" strokeLinecap="butt">
+              <rect
+                x={selected + 2}
+                y={selectedHeight - 20}
+                width="40"
+                height="15"
+                fill="#393b3d"
+                opacity={0.5}
+                stroke="none"
+                rx="1"
+              />
+              <text x={selected + 5} y={selectedHeight - 14}>
+                {moment(props.data[selectedIndex].updated).format("YYYY-MM-DD hh:mm")}
+              </text>
+              <text x={selected + 5} y={selectedHeight - 8}>
+                {props.data[selectedIndex].value.toFixed(2)}
+              </text>
+            </g>
+          ) : (
+            <g fontSize="4" stroke="white" strokeWidth={0.01} fill="white" strokeLinecap="butt">
+              <rect
+                x={selected - 42}
+                y={selectedHeight - 20}
+                width="40"
+                height="15"
+                fill="#393b3d"
+                opacity={0.5}
+                stroke="none"
+                rx="1"
+              />
+              <text x={selected - 39} y={selectedHeight - 14}>
+                {moment(props.data[selectedIndex].updated).format("YYYY-MM-DD hh:mm")}
+              </text>
+              <text x={selected - 39} y={selectedHeight - 8}>
+                {props.data[selectedIndex].value.toFixed(2)}
+              </text>
+            </g>
+          )}
+        </g>
+      ) : null}
     </svg>
   );
 }
 
-function getPath(arr: number[], max: number, min: number, line?: boolean) {
+function getPath(arr: IGraphData[], max: number, min: number, line?: boolean) {
   let result = "";
-  arr.forEach((value, index) => {
+  arr.forEach((e, index) => {
     const x = index * 10 + MARGIN_LEFT;
-    const y = GRAPH_HEIGHT - (GRAPH_HEIGHT / (max - min)) * (value - min) + 10;
+    const y = getHeight(e.value, max, min);
     if (index === 0 && line) {
       result = result.concat(`${x} ${y} `);
     } else {
@@ -125,4 +187,8 @@ function getPath(arr: number[], max: number, min: number, line?: boolean) {
     }
   });
   return result;
+}
+
+function getHeight(value: number, max: number, min: number) {
+  return GRAPH_HEIGHT - (GRAPH_HEIGHT / (max - min)) * (value - min) + 10;
 }

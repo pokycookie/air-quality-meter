@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { getUnit } from "../lib";
 import { IReduxStore, RSetHomeType } from "../redux";
 import "../scss/components/dashboardTile.scss";
 import Guage from "./guage";
@@ -22,6 +23,7 @@ interface IProps {
   min: number;
   max: number;
   value: number;
+  prev: number;
 }
 
 export default function DashboardTile(props: IProps) {
@@ -43,7 +45,13 @@ export default function DashboardTile(props: IProps) {
         {getIcon(props.type)}
       </p>
       <div className="guage">
-        <Guage min={props.min} max={props.max} value={props.value} />
+        <Guage
+          min={props.min}
+          max={props.max}
+          value={props.value}
+          prev={props.prev}
+          unit={getUnit(props.type)}
+        />
       </div>
     </div>
   );
