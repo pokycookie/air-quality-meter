@@ -16,14 +16,18 @@ export function range(size: number, startAt: number = 0): ReadonlyArray<number> 
   return result;
 }
 
-export function getUnit(type: string) {
+export function getUnit(type: string | number) {
   switch (type) {
     case "temp":
+    case 0:
       return "℃";
+    case 1:
     case "humi":
       return "%";
     case "pm":
+    case 2:
     case "form":
+    case 3:
       return "μg/m³";
     default:
       break;

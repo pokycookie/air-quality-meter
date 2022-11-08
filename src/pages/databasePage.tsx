@@ -10,6 +10,7 @@ import { ICoord, IData } from "../types";
 
 export default function DatabasePage() {
   const [DB, setDB] = useState<IData[]>([]);
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const windowSize = useSelector<IReduxStore, ICoord>((state) => {
     return state.windowSize;
   }, shallowEqual);
@@ -17,8 +18,8 @@ export default function DatabasePage() {
   const refresh = () => {
     getData()
       .then((res) => {
-        console.log(res.data);
         setDB(res.data);
+        setCurrentTime(new Date());
       })
       .catch((err) => {
         console.error(err);
@@ -30,12 +31,13 @@ export default function DatabasePage() {
   }, []);
 
   return (
-    <div className="databasePage">
+    <div className="databasePage" style={{ height: getHeight(windowSize) }}>
       <div className="nav">
         <div className="left">
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD hh:mm:ss")}</p>
         </div>
         <div className="right"></div>
       </div>
@@ -48,7 +50,7 @@ export default function DatabasePage() {
         <p>포름알데히드</p>
         <p>Updated</p>
       </div>
-      <div className="main" style={{ height: getHeight(windowSize) }}>
+      <div className="main">
         {DB.map((element, index) => {
           return (
             <div className="list" key={index}>
@@ -68,6 +70,5 @@ export default function DatabasePage() {
 }
 
 function getHeight(windowSize: ICoord) {
-  // windowSize.height * 80% - App.padding - nav.height - field.height
-  return windowSize.y * 0.8 - 50 - 65 - 55;
+  return windowSize.y - 70 - 80;
 }

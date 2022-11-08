@@ -1,8 +1,8 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { range } from "../lib";
+import { getUnit, range } from "../lib";
 
-const MARGIN_LEFT = 20;
+const MARGIN_LEFT = 25;
 const MARGIN_TOP = 10;
 const MARGIN_BOTTOM = 10;
 const MARGIN_RIGTH = 5;
@@ -87,8 +87,9 @@ export default function Graph(props: IProps) {
             return (
               <g key={e}>
                 <path d={`M ${LINE_X} ${y} L ${LINE_X - 2} ${y}`} />
-                <text x={LINE_X - 4} y={y + 1.4} textAnchor="end" fontSize="4" strokeWidth={0.2}>
+                <text x={LINE_X - 3} y={y + 1.4} textAnchor="end" fontSize="4" strokeWidth={0.2}>
                   {((max - min) / ROW_COUNT) * (ROW_COUNT - e) + min}
+                  {getUnit(props.type || 0)}
                 </text>
               </g>
             );
@@ -108,7 +109,9 @@ export default function Graph(props: IProps) {
       </g>
       <g>
         <path
-          d={`M 20 110 ${getPath(props.data, max, min)}L 260 110 Z`}
+          d={`M ${MARGIN_LEFT} ${GRAPH_HEIGHT + MARGIN_TOP} ${getPath(props.data, max, min)}L ${
+            MARGIN_LEFT + GRAPH_WIDTH
+          } ${GRAPH_HEIGHT + MARGIN_TOP} Z`}
           opacity={0.3}
           fill="#0f296f"
         />
@@ -119,7 +122,7 @@ export default function Graph(props: IProps) {
           fill="none"
         />
       </g>
-      {selected && selectedIndex ? (
+      {selected && selectedIndex && props.data[selectedIndex] ? (
         <g stroke="#0f296f" strokeWidth="0.5" strokeLinecap="square">
           <path d={`M ${selected} ${GRAPH_HEIGHT + MARGIN_TOP} ${selected} ${MARGIN_TOP}`} />
           <circle
@@ -147,6 +150,7 @@ export default function Graph(props: IProps) {
               </text>
               <text x={selected + 5} y={selectedHeight - 8}>
                 {props.data[selectedIndex].value.toFixed(2)}
+                {getUnit(props.type || 0)}
               </text>
             </g>
           ) : (
@@ -166,6 +170,7 @@ export default function Graph(props: IProps) {
               </text>
               <text x={selected - 39} y={selectedHeight - 8}>
                 {props.data[selectedIndex].value.toFixed(2)}
+                {getUnit(props.type || 0)}
               </text>
             </g>
           )}
