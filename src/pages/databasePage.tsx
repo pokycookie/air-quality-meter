@@ -31,7 +31,7 @@ export default function DatabasePage() {
   }, []);
 
   return (
-    <div className="databasePage" style={{ height: getHeight(windowSize) }}>
+    <div className="databasePage">
       <div className="nav">
         <div className="left">
           <button className="__btn refreshBtn" onClick={refresh}>
@@ -41,34 +41,36 @@ export default function DatabasePage() {
         </div>
         <div className="right"></div>
       </div>
-      <div className="field">
-        <p>온도</p>
-        <p>습도</p>
-        <p>pm1.0</p>
-        <p>pm2.5</p>
-        <p>pm10.0</p>
-        <p>포름알데히드</p>
-        <p>Updated</p>
-      </div>
-      <div className="main">
-        {DB.map((element, index) => {
-          return (
-            <div className="list" key={index}>
-              <p>{element.temp.toFixed(2)}℃</p>
-              <p>{element.humi.toFixed(2)}%</p>
-              <p>{element.pm10.toFixed(2)}μg/m³</p>
-              <p>{element.pm25.toFixed(2)}μg/m³</p>
-              <p>{element.pm100.toFixed(2)}μg/m³</p>
-              <p>{element.form.toFixed(2)}μg/m³</p>
-              <p>{moment(element.updated).format("YYYY-MM-DD hh:mm:ss")}</p>
-            </div>
-          );
-        })}
+      <div className="table">
+        <div className="field">
+          <p>온도</p>
+          <p>습도</p>
+          <p>pm1.0</p>
+          <p>pm2.5</p>
+          <p>pm10.0</p>
+          <p>포름알데히드</p>
+          <p>Updated</p>
+        </div>
+        <div className="main" style={{ height: getHeight(windowSize) }}>
+          {DB.map((element, index) => {
+            return (
+              <div className="list" key={index}>
+                <p>{element.temp.toFixed(2)}℃</p>
+                <p>{element.humi.toFixed(2)}%</p>
+                <p>{element.pm10.toFixed(2)}μg/m³</p>
+                <p>{element.pm25.toFixed(2)}μg/m³</p>
+                <p>{element.pm100.toFixed(2)}μg/m³</p>
+                <p>{element.form.toFixed(2)}μg/m³</p>
+                <p>{moment(element.updated).format("YYYY-MM-DD hh:mm:ss")}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 }
 
 function getHeight(windowSize: ICoord) {
-  return windowSize.y - 70 - 80;
+  return windowSize.y - 290;
 }

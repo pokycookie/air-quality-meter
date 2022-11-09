@@ -18,6 +18,7 @@
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+    margin-bottom: 10px;
 
     .left {
       width: 100%;
@@ -35,6 +36,14 @@
         font-weight: 600;
       }
     }
+  }
+
+  .table {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid $color-grey;
+    box-sizing: border-box;
   }
 
   .field {

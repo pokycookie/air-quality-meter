@@ -46,13 +46,13 @@ export default function Graph(props: IProps) {
         ? MARGIN_LEFT + GRAPH_WIDTH
         : svgValue;
     const blockSize = GRAPH_WIDTH / (COLUMN_COUNT * 2);
-    const tempIndex = Math.floor((svgValue + blockSize / 2) / blockSize);
-    const tempSelected = tempIndex * blockSize;
+    const tempIndex = Math.floor((svgValue - MARGIN_LEFT + blockSize / 2) / blockSize);
+    const tempSelected = tempIndex * blockSize + MARGIN_LEFT;
     if (selected !== tempSelected) {
       setSelected(tempSelected);
     }
-    if (selectedIndex !== tempIndex - 2) {
-      setSelectedIndex(tempIndex - 2);
+    if (selectedIndex !== tempIndex) {
+      setSelectedIndex(tempIndex);
     }
   };
 
