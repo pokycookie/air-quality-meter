@@ -1,7 +1,3 @@
-import pknuLogo from "../assets/pknuLogo.gif";
-import pknuCh from "../assets/pknuCh.gif";
-import pknuEn from "../assets/pknuEn.gif";
-import pknuKr from "../assets/pknuKr.gif";
 import "../scss/layout/header.scss";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { IReduxStore, RSetPage } from "../redux";
@@ -25,9 +21,9 @@ export default function Header() {
         <p className={page === 0 ? "selected" : ""} onClick={() => clickHandler(0)}>
           대시보드
         </p>
-        {/* <p className={page === 1 ? "selected" : ""} onClick={() => clickHandler(1)}>
+        <p className={page === 1 ? "selected" : ""} onClick={() => clickHandler(1)}>
           그래프
-        </p> */}
+        </p>
         <p className={page === 2 ? "selected" : ""} onClick={() => clickHandler(2)}>
           DB
         </p>

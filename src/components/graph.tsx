@@ -13,8 +13,6 @@ const SVG_WIDTH = GRAPH_WIDTH + MARGIN_LEFT + MARGIN_RIGTH;
 const SVG_HEIGHT = GRAPH_HEIGHT + MARGIN_TOP + MARGIN_BOTTOM;
 const LINE_X = MARGIN_LEFT - 1;
 const LINE_Y = SVG_HEIGHT - MARGIN_TOP + 1;
-const ROW_COUNT = 5;
-const COLUMN_COUNT = 12;
 
 export interface IGraphData {
   value: number;
@@ -32,6 +30,9 @@ export default function Graph(props: IProps) {
   const [selected, setSelected] = useState<number>();
   const [selectedIndex, setSelectedIndex] = useState<number>();
 
+  const ROW_COUNT = 5;
+  const COLUMN_COUNT = props.data.length - 1;
+
   const selectedHeight = getHeight(props.data[selectedIndex || 0]?.value || 0, max, min);
 
   const mouseHandler = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -45,7 +46,7 @@ export default function Graph(props: IProps) {
         : svgValue > MARGIN_LEFT + GRAPH_WIDTH
         ? MARGIN_LEFT + GRAPH_WIDTH
         : svgValue;
-    const blockSize = GRAPH_WIDTH / (COLUMN_COUNT * 2);
+    const blockSize = GRAPH_WIDTH / COLUMN_COUNT;
     const tempIndex = Math.floor((svgValue - MARGIN_LEFT + blockSize / 2) / blockSize);
     const tempSelected = tempIndex * blockSize + MARGIN_LEFT;
     if (selected !== tempSelected) {
@@ -109,14 +110,17 @@ export default function Graph(props: IProps) {
       </g>
       <g>
         <path
-          d={`M ${MARGIN_LEFT} ${GRAPH_HEIGHT + MARGIN_TOP} ${getPath(props.data, max, min)}L ${
-            MARGIN_LEFT + GRAPH_WIDTH
-          } ${GRAPH_HEIGHT + MARGIN_TOP} Z`}
+          d={`M ${MARGIN_LEFT} ${GRAPH_HEIGHT + MARGIN_TOP} ${getPath(
+            props.data,
+            max,
+            min,
+            GRAPH_WIDTH / COLUMN_COUNT
+          )}L ${MARGIN_LEFT + GRAPH_WIDTH} ${GRAPH_HEIGHT + MARGIN_TOP} Z`}
           opacity={0.3}
           fill="#0f296f"
         />
         <path
-          d={`M ${getPath(props.data, max, min, true)}`}
+          d={`M ${getPath(props.data, max, min, GRAPH_WIDTH / COLUMN_COUNT, true)}`}
           stroke="#0f296f"
           strokeWidth={1}
           fill="none"
@@ -180,10 +184,10 @@ export default function Graph(props: IProps) {
   );
 }
 
-function getPath(arr: IGraphData[], max: number, min: number, line?: boolean) {
+function getPath(arr: IGraphData[], max: number, min: number, ratio: number, line?: boolean) {
   let result = "";
   arr.forEach((e, index) => {
-    const x = index * 10 + MARGIN_LEFT;
+    const x = index * ratio + MARGIN_LEFT;
     const y = getHeight(e.value, max, min);
     if (index === 0 && line) {
       result = result.concat(`${x} ${y} `);
@@ -195,5 +199,6 @@ function getPath(arr: IGraphData[], max: number, min: number, line?: boolean) {
 }
 
 function getHeight(value: number, max: number, min: number) {
-  return GRAPH_HEIGHT - (GRAPH_HEIGHT / (max - min)) * (value - min) + 10;
+  const result = GRAPH_HEIGHT - (GRAPH_HEIGHT / (max - min)) * (value - min) + 10;
+  return isFinite(result) ? result : 0;
 }

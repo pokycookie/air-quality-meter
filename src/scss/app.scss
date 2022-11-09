@@ -1,17 +1,19 @@
 @import "const.scss";
 
-.App {
-  min-width: 900px;
-
+body {
   &::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
     height: 10px;
     background-color: $color-grey;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: $color-black;
+    background-color: $color-navy;
   }
+}
+
+.App {
+  min-width: 900px;
 
   // nav {
   //   width: 100vw;

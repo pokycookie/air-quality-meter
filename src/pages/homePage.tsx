@@ -83,7 +83,7 @@ export default function HomePage() {
           <p></p>
         </div>
         <div className="graph">
-          <Graph data={getGraphData(homeType, DB)} type={homeType} />
+          {DB.length > 0 ? <Graph data={getGraphData(homeType, DB)} type={homeType} /> : null}
         </div>
       </div>
     </div>
