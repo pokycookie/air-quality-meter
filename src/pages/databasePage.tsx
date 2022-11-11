@@ -37,7 +37,7 @@ export default function DatabasePage() {
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">{moment(currentTime).format("YYYY-MM-DD hh:mm:ss")}</p>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
         <div className="right"></div>
       </div>
@@ -61,7 +61,7 @@ export default function DatabasePage() {
                 <p>{element.pm25.toFixed(2)}μg/m³</p>
                 <p>{element.pm100.toFixed(2)}μg/m³</p>
                 <p>{element.form.toFixed(2)}μg/m³</p>
-                <p>{moment(element.updated).format("YYYY-MM-DD hh:mm:ss")}</p>
+                <p>{moment(element.updated).format("YYYY-MM-DD HH:mm:ss")}</p>
               </div>
             );
           })}

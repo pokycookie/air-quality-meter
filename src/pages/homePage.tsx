@@ -39,7 +39,7 @@ export default function HomePage() {
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">{moment(currentTime).format("YYYY-MM-DD hh:mm:ss")}</p>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
         {DB.length > 0 ? (
           <div className="contentArea">

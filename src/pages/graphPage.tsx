@@ -33,7 +33,7 @@ export default function GraphPage() {
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">{moment(currentTime).format("YYYY-MM-DD hh:mm:ss")}</p>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
         <div className="right">
           <button className="__btn">Sort by</button>
