@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import DataModel from "./models/dataModel";
 import { IData } from "../src/types";
 import path from "path";
+import odata from "./odata";
 
 dotenv.config();
 const app = express();
@@ -77,9 +78,16 @@ app.post("/api/data", (req, res) => {
   }
 });
 
+interface IQuery {
+  [keys: string]: string;
+}
+
 // Get data
 app.get("/api/data", (req, res) => {
-  DataModel.find()
+  const query = req.query;
+
+  DataModel.find(odata(query as IQuery).filter)
+    .sort(odata(query as IQuery).sort)
     .then((result) => res.status(200).json(result))
     .catch((err) => {
       console.error(err);

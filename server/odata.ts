@@ -1,13 +1,15 @@
 // URI Example
-// [GET] https://pknu-air-pokycookie.koyeb.app/api/data?f_temp=$lte40$gte20&f_humi=$gt0.34&s_temp=asc
+// [GET] https://pknu-air-pokycookie.koyeb.app/api/data?f_temp=$lte40$gte20&f_humi=$gt0.34&s_temp=asc&s_humi=desc
+
+import { SortOrder } from "mongoose";
 
 interface IFilter {
-  [property: string]: {
+  [field: string]: {
     [operator: string]: number;
   };
 }
 interface ISort {
-  [field: string]: string;
+  [field: string]: SortOrder;
 }
 
 interface IOperator {
@@ -23,24 +25,28 @@ interface IQuery {
   [keys: string]: string;
 }
 
-export default function query(query: IQuery) {
-  if (typeof query !== "object") return;
-
+export default function odata(query: IQuery) {
   const filter: IFilter = {};
   const sort: ISort = {};
+
+  if (typeof query !== "object") return { filter, sort };
 
   const list = ["temp", "humi", "pm10", "pm25", "pm100", "form", "updated"];
   setFilter(query, filter, list);
   setSort(query, sort, list);
+
+  return { filter, sort };
 }
 
 function setFilter(query: IQuery, filter: IFilter, list: string[]) {
   list.forEach((field) => {
     if (query[`f_${field}`] !== undefined) {
       const splitArr = splitQuery(query[`f_${field}`]);
+      const temp: { [key: string]: number } = {};
       splitArr.forEach((e) => {
-        filter[field][e.operator] = e.value;
+        temp[e.operator] = e.value;
       });
+      filter[field] = temp;
     }
   });
 }
@@ -48,7 +54,7 @@ function setFilter(query: IQuery, filter: IFilter, list: string[]) {
 function setSort(query: IQuery, sort: ISort, list: string[]) {
   list.forEach((field) => {
     if (query[`s_${field}`] !== undefined) {
-      sort[field] = query[`f_${field}`];
+      sort[field] = query[`s_${field}`] as SortOrder;
     }
   });
 }

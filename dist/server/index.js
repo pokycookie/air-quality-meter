@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dataModel_1 = __importDefault(require("./models/dataModel"));
 const path_1 = __importDefault(require("path"));
+const odata_1 = __importDefault(require("./odata"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // MongoDB
@@ -81,7 +82,9 @@ app.post("/api/data", (req, res) => {
 });
 // Get data
 app.get("/api/data", (req, res) => {
-    dataModel_1.default.find()
+    const query = req.query;
+    dataModel_1.default.find((0, odata_1.default)(query).filter)
+        .sort((0, odata_1.default)(query).sort)
         .then((result) => res.status(200).json(result))
         .catch((err) => {
         console.error(err);
