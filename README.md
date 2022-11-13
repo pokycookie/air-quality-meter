@@ -1,39 +1,57 @@
-# Air quality meter
+# PKNU 공기질 측정기
 
-## Structure
+https://pknu-air-pokycookie.koyeb.app/
 
-### build
+## 배포
 
-`npm run build`에 의해 build된 static react 디렉토리
+### [Koyeb](https://www.koyeb.com/)
 
-### dist
+Koyeb를 이용하여 Node.js 웹서버를 배포
 
-`npm run tsc`에 의해 ts에서 js파일로 변환된 디렉토리
+## API - Get data
 
-### public
+`[GET] /api/data[?query]`
 
-public 파일을 모아둔 디렉토리
+### Query
 
-### server
+ex) `/api/data?f_temp=$lte37.52$gte23.5&f_humi=$gt0.34&s_temp=asc&s_humi=desc`
 
-express 웹 서버 관련 ts파일을 모아둔 디렉토리
+#### filter parameter
 
-#### server/modeles
+특정 필드에 필터를 적용하기 위해서는 해당 필드명 앞에 `f_`를 붙여 사용
 
-Mongoose의 모델 관련된 디렉토리
+- `f_temp` : 온도 필드 필터
+- `f_humi` : 습도 필드 필터
+- `f_pm10` : pm1.0 미세먼지 필드 필터
+- `f_pm25` : pm2.5 미세먼지 필드 필터
+- `f_pm100` : pm10 미세먼지 필드 필터
+- `f_form` : 포름알데하이드 필드 필터
 
-### src
+#### filter value
 
-React 파일을 모아둔 디렉토리
+해당 필드에 적용할 필터 값을 아래의 operator를 이용해 설정
 
-#### src/components
+- `$lt<value>` : value보다 작은 값
+- `$lte<value>` : value보다 작거나 같은 값
+- `$gt<value>` : value보다 큰 값
+- `$gte<value>` : value보다 크거나 같은 값
+- `$eq<value>` : value와 같은 값
+- `$ne<value>` : value가 아닌 값
 
-React Components를 모아둔 디렉토리
+###### ※ 서로 다른 operator를 동시에 사용하여 and 필터링 가능
 
-#### src/layout && src/pages
+#### sort parameter
 
-페이지, 레이아웃과 관련된 tsx파일을 모아둔 디렉토리
+특정 필드에 정렬을 적용하기 위해서는 해당 필드명 앞에 `s_`를 붙여 사용
 
-#### src/scss
+- `s_temp` : 온도 필드 정렬
+- `s_humi` : 습도 필드 정렬
+- `s_pm10` : pm1.0 미세먼지 필드 정렬
+- `s_pm25` : pm2.5 미세먼지 필드 정렬
+- `s_pm100` : pm10 미세먼지 필드 정렬
+- `s_form` : 포름알데하이드 필드 정렬
 
-Scss관련 파일을 모아둔 디렉토리
+#### sort value
+
+- `asc` : 오름차순 정렬
+- `desc` : 내림차순 정렬
