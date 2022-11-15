@@ -1,0 +1,23 @@
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background-color: rgba($color: black, $alpha: 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modalWindow {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    max-height: 500px;
+    border-radius: 10px;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow: auto;
+  }
+}

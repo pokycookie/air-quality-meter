@@ -2,18 +2,26 @@ import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import Filter from "../layout/filter";
 import { getData } from "../lib";
-import { IReduxStore } from "../redux";
+import { IReduxStore, RSetModal } from "../redux";
 import "../scss/pages/databasePage.scss";
 import { ICoord, IData } from "../types";
 
 export default function DatabasePage() {
+  const dispatch = useDispatch();
+
   const [DB, setDB] = useState<IData[]>([]);
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
+
   const windowSize = useSelector<IReduxStore, ICoord>((state) => {
     return state.windowSize;
   }, shallowEqual);
+
+  const filterHandler = () => {
+    dispatch(RSetModal(<Filter />));
+  };
 
   const refresh = () => {
     getData()
@@ -39,7 +47,12 @@ export default function DatabasePage() {
           </button>
           <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <button className="__btn">Sort</button>
+          <button className="__btn" onClick={filterHandler}>
+            Filter
+          </button>
+        </div>
       </div>
       <div className="table">
         <div className="field">

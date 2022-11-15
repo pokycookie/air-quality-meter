@@ -1,3 +1,5 @@
+export type TModal = JSX.Element | JSX.Element[] | null;
+
 export interface IDB {
   _id: string;
   updated: Date;
