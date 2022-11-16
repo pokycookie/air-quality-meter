@@ -36,7 +36,7 @@ export default function GraphPage() {
           <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
         <div className="right">
-          <button className="__btn">Sort by</button>
+          <button className="__btn">Sort</button>
           <button className="__btn">Filter</button>
         </div>
       </div>

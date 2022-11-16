@@ -1,0 +1,28 @@
+@import "../const.scss";
+
+.range {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .bar {
+    width: 100%;
+    height: 5px;
+    background-color: $color-black;
+    border-radius: 10px;
+  }
+
+  .btn {
+    width: 15px;
+    height: 15px;
+    background-color: $color-navy;
+    border: 2px solid white;
+    border-radius: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    user-select: none;
+  }
+}
