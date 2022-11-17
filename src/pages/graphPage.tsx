@@ -2,12 +2,17 @@ import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Graph, { IGraphData } from "../components/graph";
+import GraphFilter from "../layout/graphFilter";
 import { getData } from "../lib";
+import { RSetModal } from "../redux";
 import "../scss/pages/graphPage.scss";
 import { IData } from "../types";
 
 export default function GraphPage() {
+  const dispatch = useDispatch();
+
   const [DB, setDB] = useState<IData[]>([]);
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -22,6 +27,10 @@ export default function GraphPage() {
       });
   };
 
+  const filterHandler = () => {
+    dispatch(RSetModal({ content: <GraphFilter /> }));
+  };
+
   useEffect(() => {
     refresh();
   }, []);
@@ -33,11 +42,14 @@ export default function GraphPage() {
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
+          <p className="time">
+            {moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}
+          </p>
         </div>
         <div className="right">
-          <button className="__btn">Sort</button>
-          <button className="__btn">Filter</button>
+          <button className="__btn" onClick={filterHandler}>
+            Filter
+          </button>
         </div>
       </div>
       <div className="graphArea temp">

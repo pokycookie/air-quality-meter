@@ -5,7 +5,7 @@ import pageSwitcher from "./pages/pageSwitcher";
 import { useEffect } from "react";
 import Header from "./layout/header";
 import Modal from "./layout/modal";
-import { TModal } from "./types";
+import { IModal } from "./types";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export default function App() {
   const page = useSelector<IReduxStore, number>((state) => {
     return state.page;
   }, shallowEqual);
-  const modal = useSelector<IReduxStore, TModal>((state) => {
+  const modal = useSelector<IReduxStore, IModal>((state) => {
     return state.modal;
   }, shallowEqual);
 
@@ -40,7 +40,7 @@ export default function App() {
     <div className="App">
       <Header />
       <main>{pageSwitcher(page)}</main>
-      {modal ? <Modal>{modal}</Modal> : null}
+      {modal.content ? <Modal>{modal.content}</Modal> : null}
     </div>
   );
 }

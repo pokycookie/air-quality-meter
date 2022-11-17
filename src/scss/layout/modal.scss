@@ -19,5 +19,29 @@
     box-sizing: border-box;
     padding: 20px;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .childrenArea {
+      width: 100%;
+    }
+    .submitArea {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      button {
+        width: 70px;
+        margin-left: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
   }
 }

@@ -20,7 +20,7 @@ export default function DatabasePage() {
   }, shallowEqual);
 
   const filterHandler = () => {
-    dispatch(RSetModal(<Filter />));
+    dispatch(RSetModal({ content: <Filter /> }));
   };
 
   const refresh = () => {
@@ -45,7 +45,9 @@ export default function DatabasePage() {
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
+          <p className="time">
+            {moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}
+          </p>
         </div>
         <div className="right">
           <button className="__btn">Sort</button>

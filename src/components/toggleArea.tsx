@@ -23,7 +23,9 @@ export default function ToggleArea(props: IProps) {
     <div className="toggleArea">
       <div className="btnArea">
         <p className="title">{props.title}</p>
-        {props.alwaysOpen ? null : <Toggle onChange={(value) => toggleHandler(value)} />}
+        {props.alwaysOpen ? null : (
+          <Toggle onChange={(value) => toggleHandler(value)} />
+        )}
       </div>
       {toggle ? <div className="contentArea">{props.children}</div> : null}
     </div>

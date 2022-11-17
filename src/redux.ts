@@ -1,29 +1,24 @@
-import {
-  configureStore,
-  createAction,
-  createReducer,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import { ICoord, TModal } from "./types";
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
+import { ICoord, IModal } from "./types";
 
 export interface IReduxStore {
   page: number;
   homeType: number;
   windowSize: ICoord;
-  modal: TModal;
+  modal: IModal;
 }
 
 const initState: IReduxStore = {
   page: 0,
   homeType: 0,
   windowSize: { x: 0, y: 0 },
-  modal: null,
+  modal: { content: null },
 };
 
 export const RSetPage = createAction<number>("RSetPage");
 export const RSetHomeType = createAction<number>("RSetHomeType");
 export const RSetWindowSize = createAction<ICoord>("RSetWindowSize");
-export const RSetModal = createAction<TModal>("RSetModal");
+export const RSetModal = createAction<IModal>("RSetModal");
 
 const reducer = createReducer(initState, (builder) => {
   builder

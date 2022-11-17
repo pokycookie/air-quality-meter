@@ -18,3 +18,8 @@ export interface ICoord {
   x: number;
   y: number;
 }
+
+export interface IModal {
+  content: TModal;
+  onSubmit?: () => void;
+}

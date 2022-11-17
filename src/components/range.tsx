@@ -65,6 +65,11 @@ function RangeBtn(props: IBtnProps) {
   };
 
   return (
-    <div className="btn" onMouseDown={downHandler} onMouseUp={upHandler} style={{ left }}></div>
+    <div
+      className="btn"
+      onMouseDown={downHandler}
+      onMouseUp={upHandler}
+      style={{ left }}
+    ></div>
   );
 }
