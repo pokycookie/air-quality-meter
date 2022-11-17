@@ -23,3 +23,8 @@ export interface IModal {
   content: TModal;
   onSubmit?: () => void;
 }
+
+export interface ITime {
+  hour: number;
+  minute: number;
+}

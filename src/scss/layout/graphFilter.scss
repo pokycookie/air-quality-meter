@@ -1,2 +1,11 @@
 .graphFilter {
+  .dateTimeZone {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    & > div {
+      height: 100%;
+    }
+  }
 }

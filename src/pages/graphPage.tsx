@@ -15,6 +15,8 @@ export default function GraphPage() {
 
   const [DB, setDB] = useState<IData[]>([]);
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
+  const [date, setDate] = useState(new Date());
+  const [limit, setLimit] = useState(0);
 
   const refresh = () => {
     getData()
@@ -28,7 +30,18 @@ export default function GraphPage() {
   };
 
   const filterHandler = () => {
-    dispatch(RSetModal({ content: <GraphFilter /> }));
+    dispatch(
+      RSetModal({
+        content: (
+          <GraphFilter
+            date={date}
+            setDate={setDate}
+            limit={limit}
+            setLimit={setLimit}
+          />
+        ),
+      })
+    );
   };
 
   useEffect(() => {
