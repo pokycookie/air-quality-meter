@@ -1,0 +1,77 @@
+@import "../const.scss";
+
+.timeSelector {
+  width: 250px;
+
+  .indicator {
+    width: 100%;
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px;
+    outline: 2px solid $color-black;
+
+    .left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .icon {
+        margin-right: 10px;
+      }
+      .timeText {
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .selector {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 10px;
+    overflow: hidden;
+    user-select: none;
+
+    & > div {
+      width: 50%;
+      height: 245px;
+      overflow: auto;
+      background-color: white;
+
+      &::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: $color-navy;
+      }
+
+      .element {
+        width: 100%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-grey;
+        }
+        &.selected {
+          background-color: $color-grey;
+        }
+      }
+    }
+  }
+}
