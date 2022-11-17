@@ -85,6 +85,7 @@ app.get("/api/data", (req, res) => {
     const query = req.query;
     dataModel_1.default.find((0, odata_1.default)(query).filter)
         .sort((0, odata_1.default)(query).sort)
+        .limit((0, odata_1.default)(query).limit)
         .then((result) => res.status(200).json(result))
         .catch((err) => {
         console.error(err);

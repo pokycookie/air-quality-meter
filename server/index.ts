@@ -88,6 +88,7 @@ app.get("/api/data", (req, res) => {
 
   DataModel.find(odata(query as IQuery).filter)
     .sort(odata(query as IQuery).sort)
+    .limit(odata(query as IQuery).limit)
     .then((result) => res.status(200).json(result))
     .catch((err) => {
       console.error(err);

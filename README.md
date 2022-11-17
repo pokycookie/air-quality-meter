@@ -26,6 +26,11 @@ ex) `/api/data?f_temp=$lte37.52$gte23.5&f_humi=$gt0.34&s_temp=asc&s_humi=desc`
 - `f_pm25` : pm2.5 미세먼지 필드 필터
 - `f_pm100` : pm10 미세먼지 필드 필터
 - `f_form` : 포름알데하이드 필드 필터
+- `updated` : 생성 날짜 필드 필터
+
+###### ※ updated 필드의 값은 ISO형식의 문자열([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601))을 사용
+
+ex) `/api/dataf_updated=$gte2022-11-02T15:00:00.000Z$lt2022-11-10T15:00:00.000Z`
 
 #### filter value
 
@@ -50,6 +55,7 @@ ex) `/api/data?f_temp=$lte37.52$gte23.5&f_humi=$gt0.34&s_temp=asc&s_humi=desc`
 - `s_pm25` : pm2.5 미세먼지 필드 정렬
 - `s_pm100` : pm10 미세먼지 필드 정렬
 - `s_form` : 포름알데하이드 필드 정렬
+- `s_updated` : 생성 날짜 필드 정렬
 
 #### sort value
 

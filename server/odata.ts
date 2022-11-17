@@ -5,7 +5,7 @@ import { SortOrder } from "mongoose";
 
 interface IFilter {
   [field: string]: {
-    [operator: string]: number;
+    [operator: string]: number | Date;
   };
 }
 interface ISort {
@@ -14,11 +14,11 @@ interface ISort {
 
 interface IOperator {
   operator: string;
-  value: number;
+  value: string;
 }
 interface ITempOperator {
   operator?: string;
-  value?: number;
+  value?: string;
 }
 
 interface IQuery {
@@ -28,23 +28,26 @@ interface IQuery {
 export default function odata(query: IQuery) {
   const filter: IFilter = {};
   const sort: ISort = {};
+  let limit = 0;
 
-  if (typeof query !== "object") return { filter, sort };
+  if (typeof query !== "object") return { filter, sort, limit };
 
   const list = ["temp", "humi", "pm10", "pm25", "pm100", "form", "updated"];
   setFilter(query, filter, list);
   setSort(query, sort, list);
+  limit = setLimit(query, limit);
 
-  return { filter, sort };
+  return { filter, sort, limit };
 }
 
 function setFilter(query: IQuery, filter: IFilter, list: string[]) {
   list.forEach((field) => {
     if (query[`f_${field}`] !== undefined) {
       const splitArr = splitQuery(query[`f_${field}`]);
-      const temp: { [key: string]: number } = {};
+      const temp: { [key: string]: number | Date } = {};
       splitArr.forEach((e) => {
-        temp[e.operator] = e.value;
+        temp[e.operator] =
+          field === "updated" ? new Date(e.value) : parseFloat(e.value);
       });
       filter[field] = temp;
     }
@@ -53,10 +56,25 @@ function setFilter(query: IQuery, filter: IFilter, list: string[]) {
 
 function setSort(query: IQuery, sort: ISort, list: string[]) {
   list.forEach((field) => {
-    if (query[`s_${field}`] !== undefined) {
-      sort[field] = query[`s_${field}`] as SortOrder;
+    const sortField = query[`s_${field}`];
+    if (sortField !== undefined) {
+      if (sortField === "asc" || sortField === "desc")
+        sort[field] = sortField as SortOrder;
     }
   });
+}
+
+function setLimit(query: IQuery, limit: number) {
+  if (query.limit !== undefined) {
+    const result = query.limit;
+    try {
+      return parseInt(result);
+    } catch (error) {
+      return 0;
+    }
+  } else {
+    return 0;
+  }
 }
 
 function splitQuery(str: string) {
@@ -80,7 +98,7 @@ function getOperator(str: string) {
     if (str.includes(e)) {
       const index = e.length;
       result.operator = `$${e}`;
-      result.value = parseFloat(str.slice(index));
+      result.value = str.slice(index);
     }
   });
   return result;

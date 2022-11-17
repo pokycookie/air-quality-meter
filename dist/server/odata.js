@@ -5,12 +5,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function odata(query) {
     const filter = {};
     const sort = {};
+    let limit = 0;
     if (typeof query !== "object")
-        return { filter, sort };
+        return { filter, sort, limit };
     const list = ["temp", "humi", "pm10", "pm25", "pm100", "form", "updated"];
     setFilter(query, filter, list);
     setSort(query, sort, list);
-    return { filter, sort };
+    limit = setLimit(query, limit);
+    return { filter, sort, limit };
 }
 exports.default = odata;
 function setFilter(query, filter, list) {
@@ -19,7 +21,8 @@ function setFilter(query, filter, list) {
             const splitArr = splitQuery(query[`f_${field}`]);
             const temp = {};
             splitArr.forEach((e) => {
-                temp[e.operator] = e.value;
+                temp[e.operator] =
+                    field === "updated" ? new Date(e.value) : parseFloat(e.value);
             });
             filter[field] = temp;
         }
@@ -27,10 +30,26 @@ function setFilter(query, filter, list) {
 }
 function setSort(query, sort, list) {
     list.forEach((field) => {
-        if (query[`s_${field}`] !== undefined) {
-            sort[field] = query[`s_${field}`];
+        const sortField = query[`s_${field}`];
+        if (sortField !== undefined) {
+            if (sortField === "asc" || sortField === "desc")
+                sort[field] = sortField;
         }
     });
+}
+function setLimit(query, limit) {
+    if (query.limit !== undefined) {
+        const result = query.limit;
+        try {
+            return parseInt(result);
+        }
+        catch (error) {
+            return 0;
+        }
+    }
+    else {
+        return 0;
+    }
 }
 function splitQuery(str) {
     // str example = $lte40$gte20
@@ -52,7 +71,7 @@ function getOperator(str) {
         if (str.includes(e)) {
             const index = e.length;
             result.operator = `$${e}`;
-            result.value = parseFloat(str.slice(index));
+            result.value = str.slice(index);
         }
     });
     return result;
