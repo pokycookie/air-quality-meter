@@ -1,0 +1,25 @@
+@import "../const.scss";
+
+.clock {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: $color-black;
+  color: white;
+
+  .indicators {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sliderArea {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
