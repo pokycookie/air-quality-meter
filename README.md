@@ -14,7 +14,7 @@ Koyeb를 이용하여 Node.js 웹서버를 배포
 
 ### Query
 
-ex) `/api/data?f_temp=$lte37.52$gte23.5&f_humi=$gt0.34&s_temp=asc&s_humi=desc`
+ex) `/api/data?f_temp=$lte37.52$gte23.5&f_humi=$gt0.34&s_temp=asc&s_humi=desc&limit=24`
 
 #### filter parameter
 
@@ -30,7 +30,7 @@ ex) `/api/data?f_temp=$lte37.52$gte23.5&f_humi=$gt0.34&s_temp=asc&s_humi=desc`
 
 ###### ※ updated 필드의 값은 ISO형식의 문자열([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601))을 사용
 
-ex) `/api/dataf_updated=$gte2022-11-02T15:00:00.000Z$lt2022-11-10T15:00:00.000Z`
+ex) `/api/data?f_updated=$gte2022-11-02T15:00:00.000Z$lt2022-11-10T15:00:00.000Z`
 
 #### filter value
 
@@ -61,3 +61,9 @@ ex) `/api/dataf_updated=$gte2022-11-02T15:00:00.000Z$lt2022-11-10T15:00:00.000Z`
 
 - `asc` : 오름차순 정렬
 - `desc` : 내림차순 정렬
+
+#### limit
+
+`limit=<value>`의 형식을 이용해 가져올 데이터의 개수를 제한
+
+ex) `/api/data?limit=10`
