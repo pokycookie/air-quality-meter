@@ -1,7 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import Calendar from "../components/calendar";
-import Clock from "../components/clock";
+import DateTimeSelector from "../components/dateTimeSelector";
 import ToggleArea from "../components/toggleArea";
 import { getData } from "../lib";
 import { IReduxStore, RSetModal } from "../redux";
@@ -42,19 +41,15 @@ export default function GraphFilter(props: IProps) {
 
   return (
     <div className="graphFilter">
-      <ToggleArea title="기간" alwaysOpen>
-        <ToggleArea title="시작" alwaysOpen>
-          <div className="dateTimeZone">
-            <Calendar />
-            <Clock />
-          </div>
-        </ToggleArea>
-        <ToggleArea title="종료">
-          <div className="dateTimeZone">
-            <Calendar />
-            <Clock />
-          </div>
-        </ToggleArea>
+      <ToggleArea title="시작 시간" alwaysOpen>
+        <div className="dateTimeZone">
+          <DateTimeSelector />
+        </div>
+      </ToggleArea>
+      <ToggleArea title="종료 시간">
+        <div className="dateTimeZone">
+          <DateTimeSelector />
+        </div>
       </ToggleArea>
       <ToggleArea title="데이터 개수 제한">
         <input type={"number"} value={props.limit} onChange={limitHandler} />

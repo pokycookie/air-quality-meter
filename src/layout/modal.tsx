@@ -17,9 +17,7 @@ export default function Modal(props: IProps) {
   const closeModal = () => {
     dispatch(RSetModal({ content: null }));
   };
-  const closeModalHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const closeModalHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) closeModal();
   };
   const sumbitHandler = () => {

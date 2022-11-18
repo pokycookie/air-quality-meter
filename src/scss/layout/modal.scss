@@ -1,3 +1,5 @@
+@import "../const.scss";
+
 .modal {
   width: 100vw;
   height: 100vh;
@@ -18,7 +20,7 @@
     background-color: white;
     box-sizing: border-box;
     padding: 20px;
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -26,6 +28,17 @@
 
     .childrenArea {
       width: 100%;
+      overflow: auto;
+      margin-bottom: 20px;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 0px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: $color-navy;
+      }
     }
     .submitArea {
       width: 100%;

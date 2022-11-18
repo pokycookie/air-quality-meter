@@ -1,4 +1,4 @@
-import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -32,14 +32,7 @@ export default function GraphPage() {
   const filterHandler = () => {
     dispatch(
       RSetModal({
-        content: (
-          <GraphFilter
-            date={date}
-            setDate={setDate}
-            limit={limit}
-            setLimit={setLimit}
-          />
-        ),
+        content: <GraphFilter date={date} setDate={setDate} limit={limit} setLimit={setLimit} />,
       })
     );
   };
@@ -55,13 +48,11 @@ export default function GraphPage() {
           <button className="__btn refreshBtn" onClick={refresh}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">
-            {moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}
-          </p>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
         <div className="right">
           <button className="__btn" onClick={filterHandler}>
-            Filter
+            <FontAwesomeIcon icon={faFilter} />
           </button>
         </div>
       </div>
