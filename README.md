@@ -1,12 +1,18 @@
 # PKNU 공기질 측정기
 
-https://pknu-air-pokycookie.koyeb.app/
+### https://pknu-air-pokycookie.koyeb.app/
 
 ## 배포
 
 ### [Koyeb](https://www.koyeb.com/)
 
-Koyeb를 이용하여 Node.js 웹서버를 배포
+Koyeb를 이용하여 Node.js 웹서버를 배포하였습니다.
+
+## Arduino
+
+### [Arduino & NodeMCU](https://github.com/pokycookie/2022-Capstone-Arduino)
+
+Arduino와 NodeMCU의 코드는 위의 레포지토리를 확인해주세요.
 
 ## API - Get data
 
