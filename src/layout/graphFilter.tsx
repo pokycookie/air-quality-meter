@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import DateTimeSelector from "../components/dateTimeSelector";
 import ToggleArea from "../components/toggleArea";
@@ -16,6 +16,8 @@ interface IProps {
 
 export default function GraphFilter(props: IProps) {
   const dispatch = useDispatch();
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
 
   const modal = useSelector<IReduxStore, IModal>((state) => {
     return state.modal;
