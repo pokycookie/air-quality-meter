@@ -21,7 +21,7 @@ export default function TimeSelector(props: IProps) {
 
   useEffect(() => {
     if (props.onChange) props.onChange({ hour, minute });
-  }, [hour, minute, props]);
+  }, [hour, minute]);
 
   return (
     <div className="timeSelector">

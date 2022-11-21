@@ -20,7 +20,7 @@ export default function DateSelector(props: IProps) {
 
   useEffect(() => {
     if (props.onChange) props.onChange(date);
-  }, [date, props]);
+  }, [date]);
 
   return (
     <div className="dateSelector">

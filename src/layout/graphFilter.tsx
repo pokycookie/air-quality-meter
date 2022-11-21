@@ -23,9 +23,6 @@ export default function GraphFilter(props: IProps) {
     return state.modal;
   }, shallowEqual);
 
-  const dateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = new Date(e.target.value);
-  };
   const limitHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     props.setLimit(value);
@@ -45,12 +42,12 @@ export default function GraphFilter(props: IProps) {
     <div className="graphFilter">
       <ToggleArea title="시작 시간" alwaysOpen>
         <div className="dateTimeZone">
-          <DateTimeSelector />
+          <DateTimeSelector onChange={(d) => setStartTime(d)} default={startTime} />
         </div>
       </ToggleArea>
       <ToggleArea title="종료 시간">
         <div className="dateTimeZone">
-          <DateTimeSelector />
+          <DateTimeSelector onChange={(d) => setEndTime(d)} default={endTime} />
         </div>
       </ToggleArea>
       <ToggleArea title="데이터 개수 제한">

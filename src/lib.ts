@@ -3,9 +3,7 @@ import { SortOrder } from "mongoose";
 import { IData } from "./types";
 
 const URI =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:4000"
-    : process.env.REACT_APP_HOST;
+  process.env.NODE_ENV === "development" ? "http://localhost:4000" : process.env.REACT_APP_HOST;
 
 interface IGetDataOptions {
   filter?: {
@@ -42,14 +40,10 @@ export function getData(options?: IGetDataOptions) {
     }
   }
   query = query.slice(0, -1);
-  console.log(query);
   return axios.get<IData[]>(`${URI}/api/data?${query}`);
 }
 
-export function range(
-  size: number,
-  startAt: number = 0
-): ReadonlyArray<number> {
+export function range(size: number, startAt: number = 0): ReadonlyArray<number> {
   const result = [];
   for (let i = 0; i < size; i++) {
     result.push(i + startAt);
