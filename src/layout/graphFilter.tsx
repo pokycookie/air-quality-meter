@@ -8,16 +8,16 @@ import "../scss/layout/graphFilter.scss";
 import { IModal } from "../types";
 
 interface IProps {
-  date: Date;
+  startTime: Date;
+  endTime: Date;
   limit: number;
-  setDate: React.Dispatch<React.SetStateAction<Date>>;
+  setStartTime: React.Dispatch<React.SetStateAction<Date>>;
+  setEndTime: React.Dispatch<React.SetStateAction<Date>>;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function GraphFilter(props: IProps) {
   const dispatch = useDispatch();
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
 
   const modal = useSelector<IReduxStore, IModal>((state) => {
     return state.modal;
@@ -42,12 +42,12 @@ export default function GraphFilter(props: IProps) {
     <div className="graphFilter">
       <ToggleArea title="시작 시간" alwaysOpen>
         <div className="dateTimeZone">
-          <DateTimeSelector onChange={(d) => setStartTime(d)} default={startTime} />
+          <DateTimeSelector onChange={(d) => props.setStartTime(d)} default={props.startTime} />
         </div>
       </ToggleArea>
       <ToggleArea title="종료 시간">
         <div className="dateTimeZone">
-          <DateTimeSelector onChange={(d) => setEndTime(d)} default={endTime} />
+          <DateTimeSelector onChange={(d) => props.setEndTime(d)} default={props.endTime} />
         </div>
       </ToggleArea>
       <ToggleArea title="데이터 개수 제한">

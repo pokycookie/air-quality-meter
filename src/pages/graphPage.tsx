@@ -14,8 +14,13 @@ export default function GraphPage() {
   const dispatch = useDispatch();
 
   const [DB, setDB] = useState<IData[]>([]);
-  const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const [date, setDate] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date>(
+    new Date(moment(new Date()).second(0).toISOString())
+  );
+  const [startTime, setStartTime] = useState<Date>(
+    new Date(moment(new Date()).second(0).toISOString())
+  );
+  const [endTime, setEndTime] = useState<Date>(new Date());
   const [limit, setLimit] = useState(0);
 
   const refresh = () => {
@@ -32,7 +37,16 @@ export default function GraphPage() {
   const filterHandler = () => {
     dispatch(
       RSetModal({
-        content: <GraphFilter date={date} setDate={setDate} limit={limit} setLimit={setLimit} />,
+        content: (
+          <GraphFilter
+            startTime={startTime}
+            endTime={endTime}
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+            limit={limit}
+            setLimit={setLimit}
+          />
+        ),
       })
     );
   };
@@ -49,6 +63,8 @@ export default function GraphPage() {
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
           <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
+          <p className="time">{moment(startTime).format("YYYY-MM-DD HH:mm")}</p>
+          <p className="time">{moment(endTime).format("YYYY-MM-DD HH:mm")}</p>
         </div>
         <div className="right">
           <button className="__btn" onClick={filterHandler}>

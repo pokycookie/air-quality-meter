@@ -17,16 +17,17 @@ interface ICalendar {
 }
 
 interface IProps {
+  default: Date;
   onChange?: (date: Date) => void;
 }
 
 const dayArr = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 export default function Calendar(props: IProps) {
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [month, setMonth] = useState<number>(new Date().getMonth());
+  const [year, setYear] = useState<number>(props.default.getFullYear());
+  const [month, setMonth] = useState<number>(props.default.getMonth());
   const [tableArr, setTableArr] = useState<ICalendar[]>([]);
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(props.default);
 
   useEffect(() => {
     const firstDay = new Date(year, month, 1).getDay();

@@ -11,7 +11,12 @@ interface IProps {
 }
 
 export default function DateTimeSelector(props: IProps) {
-  const [date, setDate] = useState(new Date(moment(props.default).second(0).toISOString()));
+  const [date, setDate] = useState(props.default);
+
+  const defaultTime: ITime = {
+    hour: props.default.getHours(),
+    minute: props.default.getMinutes(),
+  };
 
   const dateHandler = (d: Date) => {
     const current = moment(date).year(d.getFullYear()).month(d.getMonth()).date(d.getDate());
@@ -30,8 +35,8 @@ export default function DateTimeSelector(props: IProps) {
 
   return (
     <div className="dateTimeSelector">
-      <DateSelector onChange={(d) => dateHandler(d)} />
-      <TimeSelector onChange={(t) => timeHandler(t)} />
+      <DateSelector default={props.default} onChange={(d) => dateHandler(d)} />
+      <TimeSelector default={defaultTime} onChange={(t) => timeHandler(t)} />
     </div>
   );
 }

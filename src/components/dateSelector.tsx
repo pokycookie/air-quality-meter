@@ -7,11 +7,12 @@ import "../scss/components/dateSelector.scss";
 import Calendar from "./calendar";
 
 interface IProps {
+  default: Date;
   onChange?: (date: Date) => void;
 }
 
 export default function DateSelector(props: IProps) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(props.default);
   const [isOpen, setIsOpen] = useState(false);
 
   const openHandler = () => {
@@ -39,7 +40,7 @@ export default function DateSelector(props: IProps) {
       </div>
       {isOpen ? (
         <div className="calendar">
-          <Calendar onChange={(e) => setDate(e)} />
+          <Calendar default={props.default} onChange={(e) => setDate(e)} />
         </div>
       ) : null}
     </div>

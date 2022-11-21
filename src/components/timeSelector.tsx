@@ -7,12 +7,13 @@ import "../scss/components/timeSelector.scss";
 import { ITime } from "../types";
 
 interface IProps {
+  default: ITime;
   onChange?: (time: ITime) => void;
 }
 
 export default function TimeSelector(props: IProps) {
-  const [hour, setHour] = useState(new Date().getHours());
-  const [minute, setMinute] = useState(new Date().getMinutes());
+  const [hour, setHour] = useState(props.default.hour);
+  const [minute, setMinute] = useState(props.default.minute);
   const [isOpen, setIsOpen] = useState(false);
 
   const openHandler = () => {
