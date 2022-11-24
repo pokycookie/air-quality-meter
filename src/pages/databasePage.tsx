@@ -1,4 +1,4 @@
-import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import Filter from "../layout/filter";
 import { getData } from "../lib";
 import { IReduxStore, RSetModal } from "../redux";
 import "../scss/pages/databasePage.scss";
-import { ICoord, IData } from "../types";
+import { ICoord, IData, IGetDataOptions } from "../types";
 
 export default function DatabasePage() {
   const dispatch = useDispatch();
@@ -20,11 +20,11 @@ export default function DatabasePage() {
   }, shallowEqual);
 
   const filterHandler = () => {
-    dispatch(RSetModal({ content: <Filter /> }));
+    dispatch(RSetModal({ content: <Filter refresh={refresh} /> }));
   };
 
-  const refresh = () => {
-    getData()
+  const refresh = (query?: IGetDataOptions) => {
+    getData(query)
       .then((res) => {
         setDB(res.data);
         setCurrentTime(new Date());
@@ -42,17 +42,14 @@ export default function DatabasePage() {
     <div className="databasePage">
       <div className="nav">
         <div className="left">
-          <button className="__btn refreshBtn" onClick={refresh}>
+          <button className="__btn refreshBtn" onClick={() => refresh()}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
-          <p className="time">
-            {moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}
-          </p>
+          <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
         </div>
         <div className="right">
-          <button className="__btn">Sort</button>
           <button className="__btn" onClick={filterHandler}>
-            Filter
+            <FontAwesomeIcon icon={faFilter} />
           </button>
         </div>
       </div>

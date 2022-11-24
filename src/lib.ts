@@ -1,18 +1,9 @@
 import axios from "axios";
-import { SortOrder } from "mongoose";
-import { IData } from "./types";
+import { IData, IGetDataOptions } from "./types";
 
 const URI =
   process.env.NODE_ENV === "development" ? "http://localhost:4000" : process.env.REACT_APP_HOST;
 
-export interface IGetDataOptions {
-  filter?: {
-    field: string;
-    query: { opertator: string; value: number | string }[];
-  }[];
-  sort?: { field: string; query: SortOrder }[];
-  limit?: number;
-}
 export function getData(options?: IGetDataOptions) {
   let query = "";
   if (options) {
@@ -22,7 +13,7 @@ export function getData(options?: IGetDataOptions) {
       filter.forEach((e) => {
         let tempQuery = "";
         e.query.forEach((e2) => {
-          tempQuery = tempQuery.concat(`$${e2.opertator}${e2.value}`);
+          tempQuery = tempQuery.concat(`$${e2.operator}${e2.value}`);
         });
         query = query.concat(`f_${e.field}=${tempQuery}&`);
       });

@@ -2,27 +2,46 @@
 
 .range {
   width: 100%;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 10px;
   position: relative;
 
-  .bar {
+  input {
     width: 100%;
-    height: 5px;
-    background-color: $color-black;
-    border-radius: 10px;
-  }
-
-  .btn {
-    width: 15px;
-    height: 15px;
-    background-color: $color-navy;
-    border: 2px solid white;
-    border-radius: 100%;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
     position: absolute;
     box-sizing: border-box;
-    user-select: none;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+
+    &::-webkit-slider-thumb {
+      pointer-events: all;
+    }
+  }
+
+  .slider {
+    width: 100%;
+    height: 10px;
+    position: relative;
+
+    .track {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background-color: white;
+      border-radius: 10px;
+    }
+    .diff {
+      height: 10px;
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      background-color: $color-navy;
+      border-radius: 10px;
+    }
   }
 }

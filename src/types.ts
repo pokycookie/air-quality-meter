@@ -1,3 +1,5 @@
+import { SortOrder } from "mongoose";
+
 export type TModal = JSX.Element | JSX.Element[] | null;
 
 export interface IDB {
@@ -27,4 +29,27 @@ export interface IModal {
 export interface ITime {
   hour: number;
   minute: number;
+}
+
+export interface IRange {
+  min: number;
+  max: number;
+}
+
+export interface IGetDataOptions {
+  filter?: IGetDataOptionsFilter[];
+  sort?: IGetDataOptionsSort[];
+  limit?: number;
+}
+export interface IGetDataOptionsFilter {
+  field: string;
+  query: IGetDataOptionsFilterQuery[];
+}
+export interface IGetDataOptionsSort {
+  field: string;
+  query: SortOrder;
+}
+export interface IGetDataOptionsFilterQuery {
+  operator: string;
+  value: number | string;
 }

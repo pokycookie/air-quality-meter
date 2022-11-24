@@ -1,2 +1,17 @@
 .filter {
+  .rangeIndicator {
+    user-select: none;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .text {
+      margin: 5px;
+    }
+  }
 }

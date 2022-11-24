@@ -2,10 +2,9 @@ import { useEffect, useCallback, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import DateTimeSelector from "../components/dateTimeSelector";
 import ToggleArea from "../components/toggleArea";
-import { IGetDataOptions } from "../lib";
 import { IReduxStore, RSetModal } from "../redux";
 import "../scss/layout/graphFilter.scss";
-import { IModal } from "../types";
+import { IGetDataOptions, IModal } from "../types";
 
 interface IProps {
   startTime: Date;
@@ -35,7 +34,7 @@ export default function GraphFilter(props: IProps) {
     setLimit(value);
   };
 
-  const onSubmit = useCallback(async () => {
+  const onSubmit = useCallback(() => {
     props.setLimit(limit);
     props.setStartTime(startTime);
     props.setEndTime(endTime);
@@ -46,7 +45,7 @@ export default function GraphFilter(props: IProps) {
           field: "updated",
           query: [
             {
-              opertator: "gte",
+              operator: "gte",
               value: startTime.toISOString(),
             },
           ],
@@ -57,7 +56,7 @@ export default function GraphFilter(props: IProps) {
     if (limitOpen) query.limit = limit;
     if (endTimeOpen && query.filter)
       query.filter[0].query.push({
-        opertator: "lte",
+        operator: "lte",
         value: endTime.toISOString(),
       });
 

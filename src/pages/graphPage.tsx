@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Graph, { IGraphData } from "../components/graph";
 import GraphFilter from "../layout/graphFilter";
-import { getData, IGetDataOptions } from "../lib";
+import { getData } from "../lib";
 import { RSetModal } from "../redux";
 import "../scss/pages/graphPage.scss";
-import { IData } from "../types";
+import { IData, IGetDataOptions } from "../types";
 
 export default function GraphPage() {
   const dispatch = useDispatch();

@@ -1,70 +1,71 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../scss/components/range.scss";
+import { IRange } from "../types";
 
 interface IProps {
   min: number;
   max: number;
+  default?: IRange;
+  step?: number;
+  onChange?: ({ min, max }: IRange) => void;
 }
 
 export default function Range(props: IProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const [min, setMin] = useState(props.default ? props.default.min : props.min);
+  const [max, setMax] = useState(props.default ? props.default.max : props.max);
 
-  const [min, setMin] = useState(props.min);
-  const [max, setMax] = useState(props.max);
-  const [width, setWidth] = useState(0);
-
-  const widthHandler = () => {
-    if (ref.current !== null) setWidth(ref.current.clientWidth - 15);
+  const leftHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = parseFloat(e.target.value);
+    if (value >= max) value = max - (props.step ? props.step : 1);
+    setMin(value);
   };
-  const mouseHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log(e.nativeEvent.offsetX);
+  const rightHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = parseFloat(e.target.value);
+    if (value <= min) value = min + (props.step ? props.step : 1);
+    setMax(value);
   };
-
-  const getPosition = (value: number) => {
-    if (value < props.min) return 0;
-    if (value > props.max) return width;
-    return (value - min) * (width / (props.max - props.min));
+  const getLeft = (value: number) => {
+    const percent = ((value - props.min) / (props.max - props.min)) * 100;
+    return percent;
+  };
+  const getDiffWidth = () => {
+    const left = getLeft(min);
+    const right = getLeft(max);
+    const width = right - left;
+    return width;
   };
 
   useEffect(() => {
-    widthHandler();
-  }, [ref]);
-
-  useEffect(() => {
-    window.addEventListener("resize", widthHandler);
-    return () => {
-      window.removeEventListener("resize", widthHandler);
-    };
-  }, []);
+    if (props.onChange) props.onChange({ min, max });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [min, max]);
 
   return (
-    <div className="range" ref={ref}>
-      <div className="bar" onMouseMove={mouseHandler}></div>
-      <RangeBtn value={getPosition(min)} />
-      <RangeBtn value={getPosition(max)} />
+    <div className="range">
+      <input
+        type="range"
+        step={props.step ? props.step : 1}
+        min={props.min}
+        max={props.max}
+        value={min}
+        onChange={leftHandler}
+      />
+      <input
+        type="range"
+        step={props.step ? props.step : 1}
+        min={props.min}
+        max={props.max}
+        value={max}
+        onChange={rightHandler}
+      />
+
+      <div className="slider">
+        <div className="track"></div>
+        <div
+          className="diff"
+          style={{ width: `${getDiffWidth()}%`, left: `${getLeft(min)}%` }}
+        ></div>
+      </div>
     </div>
-  );
-}
-
-interface IBtnProps {
-  value: number;
-}
-
-function RangeBtn(props: IBtnProps) {
-  const [left, setLeft] = useState(props.value);
-
-  useEffect(() => {
-    setLeft(props.value);
-  }, [props.value]);
-
-  const downHandler = () => {
-    console.log("down");
-  };
-  const upHandler = () => {
-    console.log("up");
-  };
-
-  return (
-    <div className="btn" onMouseDown={downHandler} onMouseUp={upHandler} style={{ left }}></div>
   );
 }
