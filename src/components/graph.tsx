@@ -66,6 +66,14 @@ export default function Graph(props: IProps) {
           setMin(-20);
           setMax(60);
           break;
+        case 2:
+          setMin(0);
+          setMax(5000);
+          break;
+        case 3:
+          setMin(0);
+          setMax(1.6);
+          break;
         default:
           setMin(0);
           setMax(100);
@@ -141,18 +149,18 @@ export default function Graph(props: IProps) {
             <g fontSize="4" stroke="white" strokeWidth={0.01} fill="white" strokeLinecap="butt">
               <rect
                 x={selected + 2}
-                y={selectedHeight - 20}
+                y={selectedHeight - 5}
                 width="40"
                 height="15"
                 fill="#393b3d"
-                opacity={0.5}
+                opacity={0.7}
                 stroke="none"
                 rx="1"
               />
-              <text x={selected + 5} y={selectedHeight - 14}>
-                {moment(props.data[selectedIndex].updated).format("YYYY-MM-DD hh:mm")}
+              <text x={selected + 5} y={selectedHeight + 1}>
+                {moment(props.data[selectedIndex].updated).format("YYYY-MM-DD HH:mm")}
               </text>
-              <text x={selected + 5} y={selectedHeight - 8}>
+              <text x={selected + 5} y={selectedHeight + 7}>
                 {props.data[selectedIndex].value.toFixed(2)}
                 {getUnit(props.type || 0)}
               </text>
@@ -161,18 +169,18 @@ export default function Graph(props: IProps) {
             <g fontSize="4" stroke="white" strokeWidth={0.01} fill="white" strokeLinecap="butt">
               <rect
                 x={selected - 42}
-                y={selectedHeight - 20}
+                y={selectedHeight - 5}
                 width="40"
                 height="15"
                 fill="#393b3d"
-                opacity={0.5}
+                opacity={0.7}
                 stroke="none"
                 rx="1"
               />
-              <text x={selected - 39} y={selectedHeight - 14}>
+              <text x={selected - 39} y={selectedHeight + 1}>
                 {moment(props.data[selectedIndex].updated).format("YYYY-MM-DD hh:mm")}
               </text>
-              <text x={selected - 39} y={selectedHeight - 8}>
+              <text x={selected - 39} y={selectedHeight + 7}>
                 {props.data[selectedIndex].value.toFixed(2)}
                 {getUnit(props.type || 0)}
               </text>

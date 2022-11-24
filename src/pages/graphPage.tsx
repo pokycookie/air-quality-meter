@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Graph, { IGraphData } from "../components/graph";
 import GraphFilter from "../layout/graphFilter";
-import { getData } from "../lib";
+import { getData, IGetDataOptions } from "../lib";
 import { RSetModal } from "../redux";
 import "../scss/pages/graphPage.scss";
 import { IData } from "../types";
@@ -23,8 +23,8 @@ export default function GraphPage() {
   const [endTime, setEndTime] = useState<Date>(new Date());
   const [limit, setLimit] = useState(0);
 
-  const refresh = () => {
-    getData()
+  const refresh = (query?: IGetDataOptions) => {
+    getData(query)
       .then((res) => {
         setDB(res.data);
         setCurrentTime(new Date());
@@ -45,6 +45,7 @@ export default function GraphPage() {
             setEndTime={setEndTime}
             limit={limit}
             setLimit={setLimit}
+            refresh={refresh}
           />
         ),
       })
@@ -59,12 +60,10 @@ export default function GraphPage() {
     <div className="graphPage">
       <div className="nav">
         <div className="left">
-          <button className="__btn refreshBtn" onClick={refresh}>
+          <button className="__btn refreshBtn" onClick={() => refresh()}>
             <FontAwesomeIcon className="icon" icon={faRotateRight} />
           </button>
           <p className="time">{moment(currentTime).format("YYYY-MM-DD HH:mm:ss")}</p>
-          <p className="time">{moment(startTime).format("YYYY-MM-DD HH:mm")}</p>
-          <p className="time">{moment(endTime).format("YYYY-MM-DD HH:mm")}</p>
         </div>
         <div className="right">
           <button className="__btn" onClick={filterHandler}>
