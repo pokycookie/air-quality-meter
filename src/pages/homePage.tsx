@@ -62,7 +62,7 @@ export default function HomePage() {
             <DashboardTile
               index={2}
               min={0}
-              max={100}
+              max={5000}
               value={DB[DB.length - 1].pm25}
               prev={DB[DB.length - 2].pm25}
               type="pm"
@@ -70,7 +70,7 @@ export default function HomePage() {
             <DashboardTile
               index={3}
               min={0}
-              max={100}
+              max={1.6}
               value={DB[DB.length - 1].form}
               prev={DB[DB.length - 2].form}
               type="form"
