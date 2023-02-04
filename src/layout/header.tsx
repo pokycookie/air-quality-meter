@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header>
       <div className="left">
-        <p className="title">PKNU 공기질 측정기</p>
+        <p className="title">PKNU 집 안 공기 케어기</p>
       </div>
       <div className="right">
         <p className={page === 0 ? "selected" : ""} onClick={() => clickHandler(0)}>
